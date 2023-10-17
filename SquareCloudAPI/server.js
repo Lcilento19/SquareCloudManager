@@ -43,7 +43,7 @@ app.get("/api/data/users/:id", async (req, res) => {
   }
 });
 
-app.get("/api/data/aplications/:id", async (req, res) => {
+app.get("/api/data/applications/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const response = await axios.get(
