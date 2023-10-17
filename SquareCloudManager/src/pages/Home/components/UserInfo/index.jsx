@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUserByID } from "../../functions";
 import { AiOutlineSearch } from "react-icons/ai";
+import "./userinfo.scss";
 import "../../home.scss";
 
 export default function UserInfo() {

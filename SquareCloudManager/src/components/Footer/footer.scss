@@ -1,0 +1,14 @@
+@import "../../config/variables.scss";
+
+.footer-container {
+  position: fixed;
+  background-color: $FailedColor;
+  color: white;
+  text-align: center;
+  font-size: 10px;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box; /* Garante que o padding está incluído na largura total */
+  left: 0; /* Define o início do rodapé na borda esquerda da tela */
+  right: 0; /* Define o fim do rodapé na borda direita da tela */
+}

@@ -1,0 +1,59 @@
+@import "../../../../config/variables.scss";
+
+.dashboard {
+  position: absolute;
+  background-color: $BackgroundColorTwo;
+  list-style: none;
+  padding: 2vh;
+  width: 50vh;
+  border-radius: 10px;
+  right: 50vh;
+  top: 18vh;
+
+  li {
+    margin-right: 10px;
+  }
+
+  .info-success {
+    color: $SuccessColor;
+  }
+
+  .info-failed {
+    color: $FailedColor;
+  }
+
+  input {
+    background-color: $InputColor;
+    color: $TextColor;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+.dashboard-buttons {
+  margin-left: 10vh;
+  button {
+    padding: 1vh;
+    width: 5vh;
+    margin-right: 1vh;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-play {
+    background-color: rgb(3, 182, 113);
+    color: aliceblue;
+    border: none;
+  }
+  .btn-restart {
+    background-color: rgb(0, 102, 255);
+    color: aliceblue;
+    border: none;
+  }
+  .btn-stop {
+    background-color: rgb(224, 41, 9);
+    color: aliceblue;
+    border: none;
+  }
+}

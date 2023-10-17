@@ -26,6 +26,21 @@ app.get("/api/data/service/statistics", async (req, res) => {
   }
 });
 
+app.get("/api/data/applications/status/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await axios.get(
+      `https://api.squarecloud.app/v2/apps/${id}/status`,
+      { headers: { Authorization: `${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Erro na chamada para a API SquareCloud:", error);
+    res.status(500).json({ error: "Erro na chamada para a API SquareCloud" });
+  }
+});
+
 // Rota que lida com as solicitações para obter dados de um usuário pelo ID (com autenticação)
 app.get("/api/data/users/:id", async (req, res) => {
   const { id } = req.params;

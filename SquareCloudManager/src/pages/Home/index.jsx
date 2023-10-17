@@ -3,7 +3,9 @@ import "./home.scss";
 import ServiceStatus from "./components/ServiceStatus";
 import UserInfo from "./components/UserInfo";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import AppInfo from "./components/Applications";
+import DashBoardApp from "./components/DashBoardApp";
 
 function Home() {
   return (
@@ -12,8 +14,10 @@ function Home() {
       <div className="component">
         <ServiceStatus />
         <UserInfo />
-        <AppInfo />
+        {/* <AppInfo /> */}
+        <DashBoardApp />
       </div>
+      <Footer />
     </div>
   );
 }

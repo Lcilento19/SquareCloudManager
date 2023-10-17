@@ -1,8 +1,11 @@
-import "./header.scss"
+import { Link } from "react-router-dom";
+import "./header.scss";
 export default function Header() {
   return (
     <div className="header-container">
-      <img src="logo.webp" alt="" />
+      <Link to={"/"}>
+        <img src="logo.webp" alt="" />
+      </Link>
     </div>
   );
 }

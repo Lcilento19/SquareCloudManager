@@ -4,7 +4,20 @@ import axios from "axios";
 export async function getServiceStatistics() {
   try {
     const response = await axios.get(
-      "https://squarecloudapi.onrender.com/api/data/service/statistics"
+      "http://localhost:10000/api/data/service/statistics"
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao obter estatísticas de serviço:", error);
+    return null;
+  }
+}
+
+// Função para obter dados de estatísticas de serviço
+export async function getStatusApp(appID) {
+  try {
+    const response = await axios.get(
+      `http://localhost:10000/api/data/applications/status/${appID}`
     );
     return response.data;
   } catch (error) {
@@ -17,7 +30,7 @@ export async function getServiceStatistics() {
 export async function getUserByID(userID) {
   try {
     const response = await axios.get(
-      `https://squarecloudapi.onrender.com/api/data/users/${userID}`
+      `http://localhost:10000/api/data/users/${userID}`
     );
     return response.data;
   } catch (error) {
@@ -29,7 +42,7 @@ export async function getUserByID(userID) {
 export async function getAppByID(appID) {
   try {
     const response = await axios.get(
-      `https://squarecloudapi.onrender.com/api/data/applications/${appID}`
+      `http://localhost:10000/api/data/applications/${appID}`
     );
     return response.data;
   } catch (error) {
