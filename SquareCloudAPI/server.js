@@ -7,7 +7,7 @@ const dotenv = require("dotenv"); // Importe o dotenv
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 10000;
 const apiKey = process.env.SQUARECLOUD_API_KEY;
 
 app.use(express.json());
