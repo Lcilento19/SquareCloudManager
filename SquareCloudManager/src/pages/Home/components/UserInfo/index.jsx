@@ -22,7 +22,7 @@ export default function UserInfo() {
   }, [userIDInput]);
 
   return (
-    <ul className="info-square">
+    <ul className="info-square info-user">
       <h1>Usuário</h1>
       <li>
         <div className="search-input">
