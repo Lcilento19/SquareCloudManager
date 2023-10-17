@@ -4,7 +4,6 @@ import "./applications.scss";
 import { useState, useEffect } from "react";
 import { getAppByID } from "../../functions";
 import { AiOutlineSearch } from "react-icons/ai";
-import { Link } from "react-router-dom/dist";
 
 export default function AppInfo() {
   const [appdata, setAppData] = useState({});
@@ -14,10 +13,10 @@ export default function AppInfo() {
     async function fetchAppData(appID) {
       if (appID && appID.trim() !== "") {
         try {
-          const appData = await getAppByID(appID);
-          setAppData(appData);
+          const appdata = await getAppByID(appID);
+          setAppData(appdata);
         } catch (error) {
-          console.error("Erro ao buscar dados da aplicação:", error);
+          console.error("Erro ao buscar dados do usuário:", error);
         }
       }
     }
@@ -41,31 +40,17 @@ export default function AppInfo() {
         </div>
       </li>
       <li className="app-info">
-        <img
-          className="app-avatar"
-          src={appdata?.response?.app?.avatar}
-          alt=""
-        />
-        <span>{appdata?.response?.app?.name ?? "Carregando..."}</span>
+        <img className="app-avatar" src={appdata.response?.avatar} alt="" />
+        <span>{appdata?.response?.name ?? "Carregando..."}</span>
       </li>
-      <span>{appdata?.response?.app?.desc ?? "Carregando..."}</span>
+      <span>{appdata?.response?.desc ?? "Carregando..."}</span>
       <li>
-        <strong>ID: </strong> {appdata?.response?.app?.id ?? "Carregando..."}
+        <strong>ID: </strong> {appdata?.response?.id ?? "Carregando..."}
       </li>
       <li>
         <strong>Dono: </strong>
-        {appdata?.response?.app?.owner ?? "Carregando..."}
+        {appdata?.response?.owner ?? "Carregando..."}
       </li>
-      {appdata?.response?.app?.isWebsite === "false" ? (
-        ""
-      ) : (
-        <li>
-          <strong>Domínio: </strong>
-          <Link target="_blank" href={appdata?.response?.app?.domain}>
-            {appdata?.response?.app?.domain}
-          </Link>
-        </li>
-      )}
     </ul>
   );
 }

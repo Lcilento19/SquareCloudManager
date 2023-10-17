@@ -3,7 +3,7 @@ import "./home.scss";
 import ServiceStatus from "./components/ServiceStatus";
 import UserInfo from "./components/UserInfo";
 import Header from "../../components/Header";
-import AppInfo from "./components/Aplications";
+import AppInfo from "./components/Applications";
 
 function Home() {
   return (
