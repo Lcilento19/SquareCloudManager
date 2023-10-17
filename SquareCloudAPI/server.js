@@ -13,6 +13,10 @@ const apiKey = process.env.SQUARECLOUD_API_KEY;
 app.use(express.json());
 app.use(cors());
 
+app.get("/", async (req, res) => {
+  res.json("api SquareCloudManager ");
+});
+
 // Rota que lida com as solicitações para obter dados de estatísticas do serviço SquareCloud
 app.get("/api/data/service/statistics", async (req, res) => {
   try {
