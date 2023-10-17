@@ -70,6 +70,57 @@ app.get("/api/data/applications/:id", async (req, res) => {
   }
 });
 
+app.post("/api/data/applications/:id/start", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.post(
+      `https://api.squarecloud.app/v2/apps/${id}/start`, // Correção na URL
+      {},
+      {
+        headers: { Authorization: `${apiKey}` }, // Adicionar "Bearer" antes da chave
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Erro na chamada para a API SquareCloud:", error);
+    res.status(500).json({ error: "Erro na chamada para a API SquareCloud" });
+  }
+});
+
+app.post("/api/data/applications/:id/restart", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.post(
+      `https://api.squarecloud.app/v2/apps/${id}/restart`, // Correção na URL
+      {},
+      {
+        headers: { Authorization: `${apiKey}` }, // Adicionar "Bearer" antes da chave
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Erro na chamada para a API SquareCloud:", error);
+    res.status(500).json({ error: "Erro na chamada para a API SquareCloud" });
+  }
+});
+
+app.post("/api/data/applications/:id/stop", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await axios.post(
+      `https://api.squarecloud.app/v2/apps/${id}/stop`, // Correção na URL
+      {},
+      {
+        headers: { Authorization: `${apiKey}` }, // Adicionar "Bearer" antes da chave
+      }
+    );
+    res.json(response.data);
+  } catch (error) {
+    console.error("Erro na chamada para a API SquareCloud:", error);
+    res.status(500).json({ error: "Erro na chamada para a API SquareCloud" });
+  }
+});
+
 // Outras rotas que não requerem autenticação podem ser definidas aqui.
 
 app.listen(port, () => {

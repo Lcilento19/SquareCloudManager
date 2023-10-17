@@ -2,31 +2,89 @@ import "../../home.scss";
 import "./dashboardapp.scss";
 
 import { useState, useEffect } from "react";
-import { getAppByID, getStatusApp } from "../../functions";
+import {
+  getAppByID,
+  getStatusApp,
+  startApp as startApplication,
+  stopApp as stopApplication,
+  restartApp as restartApplication,
+} from "../../functions";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsFillPlayFill, BsStop } from "react-icons/bs";
 import { MdRestartAlt } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function DashBoardApp() {
   const [appdata, setAppData] = useState({});
   const [appstatus, setAppStatus] = useState({});
   const [appIDInput, setAppIDInput] = useState("");
 
-  useEffect(() => {
-    async function fetchAppData(appID) {
-      if (appID && appID.trim() !== "") {
-        try {
-          const appdata = await getAppByID(appID);
-          setAppData(appdata);
-          const appstatus = await getStatusApp(appID);
-          setAppStatus(appstatus);
-        } catch (error) {
-          console.error("Erro ao buscar dados do usuário:", error);
-        }
+  async function fetchAppData(appID) {
+    if (appID && typeof appID === "string" && appID.trim() !== "") {
+      try {
+        const appData = await getAppByID(appID);
+        setAppData(appData);
+        const appStatus = await getStatusApp(appID);
+        setAppStatus(appStatus);
+      } catch (error) {
+        console.error("Erro ao buscar dados da aplicação:", error);
       }
     }
+  }
+
+  useEffect(() => {
     fetchAppData(appIDInput);
   }, [appIDInput]);
+
+  async function startApp() {
+    if (
+      appIDInput &&
+      typeof appIDInput === "string" &&
+      appIDInput.trim() !== ""
+    ) {
+      try {
+        await startApplication(appIDInput);
+        toast.success("Aplicação iniciada, aguarde!");
+        fetchAppData(appIDInput);
+      } catch (error) {
+        console.error("Erro ao iniciar a aplicação:", error);
+      }
+    }
+  }
+
+  async function restartApp() {
+    if (
+      appIDInput &&
+      typeof appIDInput === "string" &&
+      appIDInput.trim() !== ""
+    ) {
+      try {
+        await restartApplication(appIDInput);
+        toast.success("Aplicação iniciada, aguarde!");
+        fetchAppData(appIDInput);
+      } catch (error) {
+        console.error("Erro ao iniciar a aplicação:", error);
+      }
+    }
+  }
+
+  async function stopApp() {
+    if (
+      appIDInput &&
+      typeof appIDInput === "string" &&
+      appIDInput.trim() !== ""
+    ) {
+      try {
+        await stopApplication(appIDInput);
+        toast.warn("Aplicação parada, aguarde!");
+        // Recarrega as informações após parar a aplicação
+        fetchAppData(appIDInput);
+      } catch (error) {
+        console.error("Erro ao parar a aplicação:", error);
+      }
+    }
+  }
+
   return (
     <ul className="info-square dashboard">
       <h1>Dashboard</h1>
@@ -47,20 +105,21 @@ export default function DashBoardApp() {
         <img className="app-avatar" src={appdata.response?.avatar} alt="" />
         <span>{appdata?.response?.name ?? "Carregando..."}</span>
         <div className="dashboard-buttons">
-          <button className="btn-play">
+          <button className="btn-play" onClick={startApp}>
             <BsFillPlayFill size={20} />
           </button>
-          <button className="btn-restart">
+          <button className="btn-restart" onClick={restartApp}>
             <MdRestartAlt size={20} />
           </button>
-          <button className="btn-stop">
+          <button className="btn-stop" onClick={stopApp}>
             <BsStop size={20} />
           </button>
         </div>
       </li>
       <span>{appdata?.response?.desc ?? "Carregando..."}</span>
       <li>
-        <strong>Status:</strong> {appstatus?.response?.status ?? "Carregando..."}
+        <strong>Status:</strong>{" "}
+        {appstatus?.response?.status ?? "Carregando..."}
       </li>
       <li>
         <strong>ID: </strong> {appdata?.response?.id ?? "Carregando..."}

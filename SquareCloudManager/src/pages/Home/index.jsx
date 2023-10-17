@@ -14,7 +14,6 @@ function Home() {
       <div className="component">
         <ServiceStatus />
         <UserInfo />
-        {/* <AppInfo /> */}
         <DashBoardApp />
       </div>
       <Footer />
