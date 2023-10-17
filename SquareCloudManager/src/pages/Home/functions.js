@@ -29,7 +29,7 @@ export async function getUserByID(userID) {
 export async function getAppByID(appID) {
   try {
     const response = await axios.get(
-      `https://squarecloudapi.onrender.com/api/data/aplications/${appID}`
+      `https://squarecloudapi.onrender.com/api/data/applications/${appID}`
     );
     return response.data;
   } catch (error) {
