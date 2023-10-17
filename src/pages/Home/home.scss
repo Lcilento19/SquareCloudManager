@@ -1,0 +1,70 @@
+@import "../../config/variables.scss";
+
+.home-container {
+  background-color: $BackgroundColor;
+  color: $TextColor;
+  font-family: $FontFamily;
+  padding: 2vh;
+  min-height: 100vh;
+}
+
+.info-square {
+  background-color: $BackgroundColorTwo;
+  list-style: none;
+  padding: 2vh;
+  width: 45vh;
+  border-radius: 10px;
+
+  li {
+    margin-right: 10px;
+  }
+
+  .info-success {
+    color: $SuccessColor;
+  }
+
+  .info-failed {
+    color: $FailedColor;
+  }
+
+  input {
+    background-color: $InputColor;
+    color: $TextColor;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+/* Estilo para o contêiner do input e ícone de busca */
+.search-input {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+
+  /* Estilo do contêiner do input e ícone */
+  .search-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid rgba(240, 248, 255, 0.274);
+    border-radius: 10px;
+    margin-bottom: 2vh;
+
+    /* Estilo do ícone de busca */
+    .search-icon {
+      font-size: 24px;
+      color: #333;
+    }
+
+    /* Estilo do input de busca */
+    input {
+      height: 1vh;
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: transparent;
+    }
+  }
+}

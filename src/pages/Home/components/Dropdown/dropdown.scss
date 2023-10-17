@@ -1,0 +1,69 @@
+/* Estilo para o componente Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-right: 15vh; /* Adiciona margem à direita para criar espaço entre os dropdowns */
+}
+
+/* Estilo para o botão do Dropdown */
+.dropdown button {
+  background-color: transparent;
+  color: aliceblue; /* Cor do botão */
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-right: 20vh; /* Espaço à direita entre os botões */
+  display: flex;
+  align-items: center; /* Alinhar o ícone verticalmente com o texto */
+  font-weight: 600;
+}
+
+/* Estilo para o ícone do botão */
+.dropdown button svg {
+  margin-left: 8px; /* Espaçamento entre o texto e o ícone */
+  transition: transform 0.2s; /* Efeito de rotação do ícone */
+}
+
+/* Estilo para o conteúdo do Dropdown (inicialmente oculto) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  position: absolute;
+}
+
+/* Estilo para o botão "Fechar" dentro do Dropdown */
+.close-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%; /* O botão Fechar ocupa toda a largura do dropdown-content */
+  display: flex;
+  align-items: center; /* Alinhar o ícone verticalmente com o texto */
+}
+
+/* Estilo para os itens dentro do conteúdo do Dropdown */
+.dropdown-content p {
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Estilo para o conteúdo do Dropdown quando está visível (aberto) */
+.dropdown-content.show {
+  display: block;
+}
+
+/* Estilo para o ícone de seta para cima quando o dropdown está aberto */
+.dropdown button.active svg {
+  transform: rotate(180deg); /* Gire o ícone 180 graus */
+}
+
+.dropdown button.active svg {
+    transform: rotate(180deg) !important; /* Gire o ícone 180 graus */
+  }
+  
