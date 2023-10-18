@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:10000/api/data/";
+const baseURL = "https://squarecloudapi.onrender.com/api/data/";
 
 // Função para obter dados de estatísticas de serviço
 export async function getServiceStatistics() {
