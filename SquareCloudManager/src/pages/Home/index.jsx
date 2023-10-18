@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./home.scss";
 import ServiceStatus from "./components/ServiceStatus";
 import UserInfo from "./components/UserInfo";
