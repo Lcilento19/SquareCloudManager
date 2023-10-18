@@ -10,10 +10,30 @@
   right: 50vh;
   top: 18vh;
 
+  .app-info {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 2vh;
+
+    .app-avatar {
+      /* Estiliza a imagem */
+      width: 50px; /* Define o tamanho da imagem como 50px */
+      height: 50px; /* Define o tamanho da imagem como 50px */
+      border-radius: 10px;
+      margin-right: 10px;
+    }
+
+    span {
+      margin-left: 10px;
+      font-weight: 800;
+      font-size: large;
+    }
+  }
+
   li {
     margin-right: 10px;
   }
-
   .info-success {
     color: $SuccessColor;
   }
@@ -29,31 +49,36 @@
     border-radius: 10px;
     border: none;
   }
-}
 
-.dashboard-buttons {
-  margin-left: 10vh;
-  button {
-    padding: 1vh;
-    width: 5vh;
-    margin-right: 1vh;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+  .dashboard-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: 10vh;
 
-  .btn-play {
-    background-color: rgb(3, 182, 113);
-    color: aliceblue;
-    border: none;
-  }
-  .btn-restart {
-    background-color: rgb(0, 102, 255);
-    color: aliceblue;
-    border: none;
-  }
-  .btn-stop {
-    background-color: rgb(224, 41, 9);
-    color: aliceblue;
-    border: none;
+    button {
+      padding: 1vh;
+      width: 5vh;
+      margin-right: 1vh;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-play {
+      background-color: rgb(3, 182, 113);
+      color: aliceblue;
+      border: none;
+    }
+
+    .btn-restart {
+      background-color: rgb(0, 102, 255);
+      color: aliceblue;
+      border: none;
+    }
+
+    .btn-stop {
+      background-color: rgb(224, 41, 9);
+      color: aliceblue;
+      border: none;
+    }
   }
 }
