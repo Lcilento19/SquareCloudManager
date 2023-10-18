@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const baseURL = "https://squarecloudapi.onrender.com/api/data/";
+const baseURL = "http://localhost:10000/api/data/";
 
-// Função para obter dados de estatísticas de serviço
 export async function getServiceStatistics() {
   try {
     const response = await axios.get(`${baseURL}service/statistics`);
@@ -13,7 +12,6 @@ export async function getServiceStatistics() {
   }
 }
 
-// Função para obter dados de estatísticas de serviço
 export async function getStatusApp(appID) {
   try {
     const response = await axios.get(`${baseURL}applications/status/${appID}`);
@@ -24,7 +22,6 @@ export async function getStatusApp(appID) {
   }
 }
 
-// Função para obter dados de um usuário por ID
 export async function getUserByID(userID) {
   try {
     const response = await axios.get(`${baseURL}users/${userID}`);
@@ -38,6 +35,16 @@ export async function getUserByID(userID) {
 export async function getAppByID(appID) {
   try {
     const response = await axios.get(`${baseURL}applications/${appID}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao obter dados do usuário:", error);
+    return null;
+  }
+}
+
+export async function getAppLogs(appID) {
+  try {
+    const response = await axios.get(`${baseURL}applications/logs/${appID}`);
     return response.data;
   } catch (error) {
     console.error("Erro ao obter dados do usuário:", error);

@@ -1,19 +1,20 @@
 @import "../../../../config/variables.scss";
 
 .dashboard {
-  position: absolute;
+  position: fixed; 
   background-color: $BackgroundColorTwo;
   list-style: none;
-  padding: 2vh;
-  max-width: 80%; /* Limite a largura máxima para garantir a responsividade */
+  padding: 4vh;
+  max-width: 70%;
   border-radius: 10px;
-  right: 10%; /* Ajuste a posição à direita para 10% */
+  right: 5%;
   top: 18vh;
+
 
   .app-info {
     display: flex;
     align-items: center;
-    margin-right: 2%; /* Adicione um espaço entre elementos */
+    margin-right: 10px;
     margin-bottom: 2vh;
 
     .app-avatar {
@@ -31,7 +32,7 @@
   }
 
   li {
-    margin-right: 2%; /* Adicione um espaço entre elementos */
+    list-style: none;
   }
 
   .info-success {
@@ -48,7 +49,6 @@
     padding: 10px;
     border-radius: 10px;
     border: none;
-    width: 100%; /* Preencha a largura disponível */
   }
 
   .dashboard-buttons {
@@ -83,16 +83,28 @@
     }
   }
 
+  .console {
+    margin-top: 2vh;
+    background-color: $BackgroundColor;
+    border: none;
+    border-radius: 10px;
+    resize: none;
+    width: 45vh;
+    height: 10vh;
+    padding: 1vh;
+    color: aliceblue;
+  }
+
   @media (max-width: 768px) {
     .app-info {
-      flex-direction: column; /* Empilhe os elementos verticalmente */
-      text-align: center; /* Centralize o texto */
-      margin-right: 0; /* Remova a margem entre elementos */
-      margin-bottom: 1vh;
+      flex-direction: column;
+      text-align: center;
+      margin-right: 0;
+      margin-bottom: 2vh;
     }
 
     li {
-      margin-right: 0; /* Remova a margem entre elementos */
+      margin-right: 0;
     }
 
     .dashboard-buttons {
