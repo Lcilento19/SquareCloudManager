@@ -19,16 +19,25 @@ export default function DashBoardApp() {
   const [appdata, setAppData] = useState({});
   const [appstatus, setAppStatus] = useState({});
   const [appIDInput, setAppIDInput] = useState("");
+  const [appNotFound, setAppNotFound] = useState(false);
 
   async function fetchAppData(appID) {
     if (appID && typeof appID === "string" && appID.trim() !== "") {
       try {
         const appData = await getAppByID(appID);
-        setAppData(appData);
-        const appStatus = await getStatusApp(appID);
-        setAppStatus(appStatus);
+        if (appData.response) {
+          setAppData(appData);
+          setAppNotFound(false);
+          const appStatus = await getStatusApp(appID);
+          setAppStatus(appStatus);
+        } else {
+          setAppData({});
+          setAppStatus({});
+          setAppNotFound(true);
+        }
       } catch (error) {
         console.error("Erro ao buscar dados da aplicação:", error);
+        setAppNotFound(true);
       }
     }
   }
@@ -49,6 +58,7 @@ export default function DashBoardApp() {
         fetchAppData(appIDInput);
       } catch (error) {
         console.error("Erro ao iniciar a aplicação:", error);
+        setAppNotFound(true);
       }
     }
   }
@@ -64,7 +74,8 @@ export default function DashBoardApp() {
         toast.success("Aplicação reiniciada, aguarde!");
         fetchAppData(appIDInput);
       } catch (error) {
-        console.error("Erro ao iniciar a aplicação:", error);
+        console.error("Erro ao reiniciar a aplicação:", error);
+        setAppNotFound(true);
       }
     }
   }
@@ -78,10 +89,10 @@ export default function DashBoardApp() {
       try {
         await stopApplication(appIDInput);
         toast.warn("Aplicação parada, aguarde!");
-        // Recarrega as informações após parar a aplicação
         fetchAppData(appIDInput);
       } catch (error) {
         console.error("Erro ao parar a aplicação:", error);
+        setAppNotFound(true);
       }
     }
   }
@@ -103,7 +114,11 @@ export default function DashBoardApp() {
         </div>
       </li>
 
-      {appdata.response?.avatar && (
+      {appNotFound ? (
+        <li>
+          <p>Aplicação não encontrada ou erro ao carregar os dados.</p>
+        </li>
+      ) : appdata.response && appdata.response.avatar ? (
         <li className="app-info">
           <img className="app-avatar" src={appdata.response.avatar} alt="" />
           <span>{appdata.response.name || "Carregando..."}</span>
@@ -119,25 +134,36 @@ export default function DashBoardApp() {
             </button>
           </div>
         </li>
+      ) : (
+        <li>
+          <p>Carregando...</p>
+        </li>
       )}
 
       <span>{appdata.response?.desc || "Carregando..."}</span>
 
-      <li>
-        <strong>Status: </strong>
-        {appstatus?.response?.status === "running" ? (
-          <span className="info-success">{appstatus?.response?.status}</span>
-        ) : (
-          <span className="info-failed">{appstatus?.response?.status}</span>
-        )}
-      </li>
-      <li>
-        <strong>ID: </strong> {appdata.response?.id || "Carregando..."}
-      </li>
-      <li>
-        <strong>Dono: </strong>
-        {appdata.response?.owner || "Carregando..."}
-      </li>
+      {appstatus.response ? (
+        <li>
+          <strong>Status: </strong>
+          {appstatus.response.status === "running" ? (
+            <span className="info-success">{appstatus.response.status}</span>
+          ) : (
+            <span className="info-failed">{appstatus.response.status}</span>
+          )}
+        </li>
+      ) : null}
+
+      {appdata.response ? (
+        <>
+          <li>
+            <strong>ID: </strong> {appdata.response.id || "Carregando..."}
+          </li>
+          <li>
+            <strong>Dono: </strong>
+            {appdata.response.owner || "Carregando..."}
+          </li>
+        </>
+      ) : null}
     </ul>
   );
 }
