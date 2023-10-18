@@ -10,160 +10,121 @@ import {
   restartApp as restartApplication,
 } from "../../functions";
 import { AiOutlineSearch } from "react-icons/ai";
-import { BsFillPlayFill } from "react-icons/bs";
-import { FaStop } from "react-icons/fa";
-import { RiRestartLine } from "react-icons/ri";
+import { BsFillPlayFill, BsStop, MdRefresh } from "react-icons/bs";
 import { toast } from "react-toastify";
 
 export default function DashBoardApp() {
-  const [appdata, setAppData] = useState({});
-  const [appstatus, setAppStatus] = useState({});
+  const [appData, setAppData] = useState(null);
+  const [appStatus, setAppStatus] = useState(null);
   const [appIDInput, setAppIDInput] = useState("");
-  const [appNotFound, setAppNotFound] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
-  async function fetchAppData(appID) {
-    if (appID && typeof appID === "string" && appID.trim() !== "") {
-      try {
-        const appData = await getAppByID(appID);
-        if (appData.response) {
-          setAppData(appData);
-          setAppNotFound(false);
-          const appStatus = await getStatusApp(appID);
-          setAppStatus(appStatus);
-        } else {
-          setAppData({});
-          setAppStatus({});
-          setAppNotFound(true);
-        }
-      } catch (error) {
-        console.error("Erro ao buscar dados da aplicação:", error);
-        setAppNotFound(true);
+  const fetchAppData = async (appID) => {
+    setLoading(true);
+    setNotFound(false);
+
+    try {
+      const appData = await getAppByID(appID);
+      if (appData && appData.response) {
+        setAppData(appData.response);
+        const appStatus = await getStatusApp(appID);
+        setAppStatus(appStatus.response);
+      } else {
+        setNotFound(true);
       }
+    } catch (error) {
+      console.error("Erro ao buscar dados da aplicação:", error);
+      setNotFound(true);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchAppData(appIDInput);
+    if (appIDInput.trim() !== "") {
+      fetchAppData(appIDInput);
+    }
   }, [appIDInput]);
 
-  async function startApp() {
-    if (
-      appIDInput &&
-      typeof appIDInput === "string" &&
-      appIDInput.trim() !== ""
-    ) {
-      try {
-        await startApplication(appIDInput);
-        toast.success("Aplicação iniciada, aguarde!");
-        fetchAppData(appIDInput);
-      } catch (error) {
-        console.error("Erro ao iniciar a aplicação:", error);
-        setAppNotFound(true);
-      }
+  const startApp = async () => {
+    try {
+      await startApplication(appIDInput);
+      toast.success("Aplicação iniciada, aguarde!");
+      fetchAppData(appIDInput);
+    } catch (error) {
+      console.error("Erro ao iniciar a aplicação:", error);
     }
-  }
+  };
 
-  async function restartApp() {
-    if (
-      appIDInput &&
-      typeof appIDInput === "string" &&
-      appIDInput.trim() !== ""
-    ) {
-      try {
-        await restartApplication(appIDInput);
-        toast.success("Aplicação reiniciada, aguarde!");
-        fetchAppData(appIDInput);
-      } catch (error) {
-        console.error("Erro ao reiniciar a aplicação:", error);
-        setAppNotFound(true);
-      }
+  const stopApp = async () => {
+    try {
+      await stopApplication(appIDInput);
+      toast.warn("Aplicação parada, aguarde!");
+      fetchAppData(appIDInput);
+    } catch (error) {
+      console.error("Erro ao parar a aplicação:", error);
     }
-  }
+  };
 
-  async function stopApp() {
-    if (
-      appIDInput &&
-      typeof appIDInput === "string" &&
-      appIDInput.trim() !== ""
-    ) {
-      try {
-        await stopApplication(appIDInput);
-        toast.warn("Aplicação parada, aguarde!");
-        fetchAppData(appIDInput);
-      } catch (error) {
-        console.error("Erro ao parar a aplicação:", error);
-        setAppNotFound(true);
-      }
+  const restartApp = async () => {
+    try {
+      await restartApplication(appIDInput);
+      toast.success("Aplicação reiniciada, aguarde!");
+      fetchAppData(appIDInput);
+    } catch (error) {
+      console.error("Erro ao reiniciar a aplicação:", error);
     }
-  }
+  };
 
   return (
-    <ul className="info-square dashboard">
+    <div className="dashboard-container">
       <h1>Dashboard</h1>
-      <li>
-        <div className="search-input">
-          <div className="search-container">
-            <AiOutlineSearch className="search-icon" />
-            <input
-              type="text"
-              placeholder="Insira o ID da aplicação"
-              value={appIDInput}
-              onChange={(e) => setAppIDInput(e.target.value)}
-            />
-          </div>
-        </div>
-      </li>
-
-      {appNotFound ? (
-        <li>
-          <p>Aplicação não encontrada ou erro ao carregar os dados.</p>
-        </li>
-      ) : appdata.response && appdata.response.avatar ? (
-        <li className="app-info">
-          <img className="app-avatar" src={appdata.response.avatar} alt="" />
-          <span>{appdata.response.name || "Carregando..."}</span>
+      <div className="search-input">
+        <AiOutlineSearch className="search-icon" />
+        <input
+          type="text"
+          placeholder="Insira o ID da aplicação"
+          value={appIDInput}
+          onChange={(e) => setAppIDInput(e.target.value)}
+        />
+      </div>
+      {notFound && (
+        <p>Aplicação não encontrada ou erro ao carregar os dados.</p>
+      )}
+      {loading && !notFound && <p>Carregando...</p>}
+      {appData && !notFound && !loading && (
+        <div className="app-info">
+          <img className="app-avatar" src={appData.avatar} alt={appData.name} />
+          <span>{appData.name}</span>
           <div className="dashboard-buttons">
             <button className="btn-play" onClick={startApp}>
               <BsFillPlayFill size={20} />
             </button>
-            <button className="btn-restart" onClick={restartApp}>
-              <RiRestartLine size={20} />
-            </button>
             <button className="btn-stop" onClick={stopApp}>
-              <FaStop size={20} />
+              <BsStop size={20} />
+            </button>
+            <button className="btn-restart" onClick={restartApp}>
+              <MdRefresh size={20} />
             </button>
           </div>
-        </li>
-      ) : (
-        <li>
-          <p>Carregando...</p>
-        </li>
+          <p>{appData.desc}</p>
+          <p>
+            <strong>Status: </strong>
+            {appStatus?.status === "running" ? (
+              <span className="info-success">{appStatus.status}</span>
+            ) : (
+              <span className="info-failed">{appStatus.status}</span>
+            )}
+          </p>
+          <p>
+            <strong>ID:</strong> {appData.id}
+          </p>
+          <p>
+            <strong>Dono:</strong> {appData.owner}
+          </p>
+        </div>
       )}
-
-      <span>{appdata.response?.desc || "Carregando..."}</span>
-
-      {appstatus.response ? (
-        <li>
-          <strong>Status: </strong>
-          {appstatus.response.status === "running" ? (
-            <span className="info-success">{appstatus.response.status}</span>
-          ) : (
-            <span className="info-failed">{appstatus.response.status}</span>
-          )}
-        </li>
-      ) : null}
-
-      {appdata.response ? (
-        <>
-          <li>
-            <strong>ID: </strong> {appdata.response.id || "Carregando..."}
-          </li>
-          <li>
-            <strong>Dono: </strong>
-            {appdata.response.owner || "Carregando..."}
-          </li>
-        </>
-      ) : null}
-    </ul>
+    </div>
   );
 }
